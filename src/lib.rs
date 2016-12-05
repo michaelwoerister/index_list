@@ -23,7 +23,7 @@ impl IndexList {
 
             index_list
         } else {
-            let ptr = Box::new(values.to_owned()).into_raw();
+            let ptr = Box::into_raw(Box::new(values.to_owned()));
             IndexList {
                 ptr_or_list: ptr
             }
