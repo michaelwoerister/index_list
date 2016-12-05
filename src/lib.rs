@@ -43,7 +43,7 @@ impl IndexList {
 
     pub fn get(&self, index: usize) -> Option<usize> {
         if self.is_immediate() {
-            if index > self.immediate_len() {
+            if index >= self.immediate_len() {
                 None
             } else {
                 Some(self.get_immediate_value(index))
