@@ -20,7 +20,7 @@ impl IndexList {
     }
 
     pub fn get(&self, index: usize) -> Option<usize> {
-        self.items.get(index).map(|x| *x)
+        self.items[index]
     }
 
     pub fn set(&mut self, index: usize, value: usize) {
