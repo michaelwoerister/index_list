@@ -130,5 +130,13 @@ mod tests {
         assert_eq!(list.get(3), None);
     }
 
+    #[test]
+    fn non_immediate_len() {
+        for len in 0 .. 20 {
+            let mut reference: Vec<usize> = Vec::from(0..len);
+
+
+        }
+    }
 
 }
