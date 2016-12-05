@@ -24,7 +24,7 @@ impl IndexList {
     }
 
     pub fn set(&mut self, index: usize, value: usize) {
-        self.items.set(index, value)
+        self.items[index] = value;
     }
 }
 
