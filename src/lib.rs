@@ -6,6 +6,22 @@
 //
 // ILLL 0000 1111 2222 3333 4444 5555 6666
 
+// 0                                       31                                     63
+// . .... .... .... .... .... .... .... .... .... .... .... .... .... .... .... ...
+//
+// I LLLL 0000 1111 2222 3333 4444 5555 6666 7777 8888 9999 1010 1111 1212 1313
+
+#[cfg(target_pointer_width = "32")]
+const MAX_LENGTH: usize = 7;
+#[cfg(target_pointer_width = "32")]
+const LENGTH_BITS: usize = 3;
+
+#[cfg(target_pointer_width = "64")]
+const MAX_LENGTH: usize = 13;
+#[cfg(target_pointer_width = "64")]
+const LENGTH_BITS: usize = 4;
+
+
 pub struct IndexList {
     ptr_or_list: *const Vec<usize>
 }
@@ -71,14 +87,14 @@ impl IndexList {
         debug_assert!(self.is_immediate());
         debug_assert!(value == value & 0b1111);
         debug_assert!(index < self.immediate_len());
-        let bit_offset = (index + 1) * 4;
+        let bit_offset = index * 4 + LENGTH_BITS + 1;
         *self.ptr_as_bits_mut() &= !(0b1111 << bit_offset);
         *self.ptr_as_bits_mut() |= value << bit_offset;
     }
 
     fn get_immediate_value(&self, index: usize) -> usize {
         debug_assert!(self.is_immediate());
-        let bit_offset = (index + 1) * 4;
+        let bit_offset = index * 4 + LENGTH_BITS + 1;
         (self.ptr_as_bits() >> bit_offset) & 0b1111
     }
 
@@ -95,7 +111,7 @@ impl IndexList {
     }
 
     fn can_be_immediate(values: &[usize]) -> bool {
-        values.len() < 8 && values.iter().all(|&val| (val & 0b1111) == val)
+        values.len() <= MAX_LENGTH && values.iter().all(|&val| (val & 0b1111) == val)
     }
 }
 
