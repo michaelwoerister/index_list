@@ -13,7 +13,7 @@ pub struct IndexList {
 
 impl IndexList {
     pub fn new() -> IndexList {
-        let x = Box::new(vec![]);
+        let x = Box::new(Vec::new());
         let ptr = &*x as *mut Vec<usize>
         ::std::mem::forget(x);
         IndexList {
