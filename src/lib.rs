@@ -21,11 +21,20 @@ impl IndexList {
     }
 
     pub fn len(&self) -> usize {
-        self.get_vec().len()
+        if self.is_immediate() {
+            self.immediate_len()
+        } else {
+            self.get_vec().len()
+        }
+
     }
 
     pub fn get(&self, index: usize) -> Option<usize> {
-        self.get_vec().get(index).map(|x| *x)
+        if self.is_immediate() {
+            self.immed(index)
+        } else {
+            self.get_vec().get(index).map(|x| *x)
+        }
     }
 
     fn get_vec(&self) -> &Vec<usize> {
