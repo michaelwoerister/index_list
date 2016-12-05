@@ -7,13 +7,17 @@
 // ILLL 0000 1111 2222 3333 4444 5555 6666
 
 pub struct IndexList {
-    items: Vec<usize>
+    // items: Vec<usize>
+    ptr_or_list: *mut Vec<usize>
 }
 
 impl IndexList {
     pub fn new() -> IndexList {
+        let boxed = Box::new(vec![]);
+        let ptr = &*boxed as *mut Vec<usize>
+        ::std::mem::forget(boxed);
         IndexList {
-            items: vec![]
+            ptr_or_list: ptr
         }
     }
 
