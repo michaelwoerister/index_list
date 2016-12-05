@@ -129,6 +129,7 @@ impl Drop for IndexList {
 #[cfg(test)]
 mod tests {
     use super::IndexList;
+    use super::MAX_LENGTH;
 
     #[test]
     fn len() {
@@ -160,7 +161,7 @@ mod tests {
         for len in 0 .. 20 {
             let reference: Vec<usize> = (0..len).map(|val| val % 8).collect();
             let index_list = IndexList::from_slice(&reference);
-            assert_eq!(index_list.is_immediate(), len < 8);
+            assert_eq!(index_list.is_immediate(), len <= MAX_LENGTH);
 
             for (index, &val) in reference.iter().enumerate() {
                 assert_eq!(val, index_list.get(index).unwrap());
