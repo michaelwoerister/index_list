@@ -28,13 +28,6 @@ impl IndexList {
     }
 }
 
-impl std::ops::Index<usize> for IndexList {
-    type Output = usize;
-    fn index(&self, index: usize) -> &Self::Output {
-        self.items.get(index).unwrap()
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::IndexList;
@@ -83,22 +76,4 @@ mod tests {
         list.set(2, 3);
     }
 
-    #[test]
-    fn index() {
-        let mut list = IndexList::new();
-        list.push(1);
-        list.push(2);
-        assert_eq!(list.len(), 2);
-        assert_eq!(list[0], 1);
-        assert_eq!(list[1], 2);
-    }
-
-    #[test]
-    #[should_panic]
-    fn index_panic() {
-        let mut list = IndexList::new();
-        list.push(1);
-        list.push(2);
-        let _ = list[2];
-    }
 }
