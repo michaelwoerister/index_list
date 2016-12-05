@@ -55,7 +55,7 @@ impl IndexList {
     fn get_immediate_value(&self, index: usize) -> usize {
         debug_assert!(self.is_immediate());
         let bit_offset = (index + 1) * 4;
-        (*self.ptr_as_bits() >> bit_offset) & 0b1111
+        (self.ptr_as_bits() >> bit_offset) & 0b1111
     }
 
     fn ptr_as_bits_mut(&mut self) -> &mut usize {
