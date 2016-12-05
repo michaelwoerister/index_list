@@ -138,7 +138,7 @@ mod tests {
             let index_list = IndexList::from_slice(&reference);
 
             for (index, &val) in reference.iter().enumerate() {
-                assert_eq!(val, index_list.get(index));
+                assert_eq!(val, index_list.get(index).unwrap());
             }
         }
     }
