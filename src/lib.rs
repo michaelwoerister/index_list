@@ -34,4 +34,17 @@ mod tests {
         let list = IndexList::new();
         assert_eq!(list.len(), 0);
     }
+
+    #[test]
+    fn get() {
+        let list = IndexList::new();
+        list.push(1);
+        list.push(2);
+        list.push(1);
+        assert_eq!(list.len(), 3);
+        assert_eq!(list.get(0), Some(1));
+        assert_eq!(list.get(1), Some(2));
+        assert_eq!(list.get(2), Some(1));
+        assert_eq!(list.get(3), None);
+    }
 }
