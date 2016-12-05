@@ -1,6 +1,6 @@
 
 
-struct IndexList {
+pub struct IndexList {
     items: Vec<usize>
 }
 
