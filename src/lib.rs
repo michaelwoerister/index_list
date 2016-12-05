@@ -12,8 +12,8 @@ pub struct IndexList {
 }
 
 impl IndexList {
-    pub fn new() -> IndexList {
-        let mut x = Box::new(Vec::new());
+    pub fn from_slice(values: &[usize]) -> IndexList {
+        let mut x = Box::new(values.to_owned());
         let ptr = &mut *x as *mut Vec<usize>;
         ::std::mem::forget(x);
         IndexList {
@@ -25,16 +25,8 @@ impl IndexList {
         self.get_vec().len()
     }
 
-    pub fn push(&mut self, item: usize) {
-        self.get_vec_mut().push(item);
-    }
-
     pub fn get(&self, index: usize) -> Option<usize> {
         self.get_vec().get(index).map(|x| *x)
-    }
-
-    pub fn set(&mut self, index: usize, value: usize) {
-        self.get_vec_mut()[index] = value;
     }
 
     fn get_vec(&self) -> &Vec<usize> {
@@ -58,16 +50,22 @@ mod tests {
 
     #[test]
     fn len() {
-        let list = IndexList::new();
+        let list = IndexList::from_slice(&[]);
         assert_eq!(list.len(), 0);
+
+        let list = IndexList::from_slice(&[1]);
+        assert_eq!(list.len(), 1);
+
+        let list = IndexList::from_slice(&[2]);
+        assert_eq!(list.len(), 1);
+
+        let list = IndexList::from_slice(&[1, 2]);
+        assert_eq!(list.len(), 2);
     }
 
     #[test]
     fn get() {
-        let mut list = IndexList::new();
-        list.push(1);
-        list.push(2);
-        list.push(1);
+        let mut list = IndexList::from_slice(&[1, 2, 1]);
         assert_eq!(list.len(), 3);
         assert_eq!(list.get(0), Some(1));
         assert_eq!(list.get(1), Some(2));
@@ -75,29 +73,5 @@ mod tests {
         assert_eq!(list.get(3), None);
     }
 
-    #[test]
-    fn set() {
-        let mut list = IndexList::new();
-        list.push(1);
-        list.push(2);
-        assert_eq!(list.len(), 2);
-        assert_eq!(list.get(0), Some(1));
-        assert_eq!(list.get(1), Some(2));
-        list.set(0, 3);
-        assert_eq!(list.get(0), Some(3));
-        assert_eq!(list.get(1), Some(2));
-        list.set(1, 4);
-        assert_eq!(list.get(0), Some(3));
-        assert_eq!(list.get(1), Some(4));
-    }
-
-    #[test]
-    #[should_panic]
-    fn set_panic() {
-        let mut list = IndexList::new();
-        list.push(1);
-        list.push(2);
-        list.set(2, 3);
-    }
 
 }
