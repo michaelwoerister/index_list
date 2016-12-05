@@ -34,7 +34,7 @@ impl IndexList {
             if index > self.immediate_len() {
                 None
             } else {
-                self.get_immediate_value(index)
+                Some(self.get_immediate_value(index))
             }
         } else {
             self.get_vec().get(index).map(|x| *x)
