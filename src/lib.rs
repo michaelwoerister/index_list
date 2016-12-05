@@ -104,6 +104,7 @@ impl IndexList {
 #[cfg(test)]
 mod tests {
     use super::IndexList;
+    use std::iter::FromIterator;
 
     #[test]
     fn len() {
