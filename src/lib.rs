@@ -37,7 +37,7 @@ mod tests {
 
     #[test]
     fn get() {
-        let list = IndexList::new();
+        let mut list = IndexList::new();
         list.push(1);
         list.push(2);
         list.push(1);
