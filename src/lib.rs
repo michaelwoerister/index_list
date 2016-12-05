@@ -7,7 +7,6 @@
 // ILLL 0000 1111 2222 3333 4444 5555 6666
 
 pub struct IndexList {
-    // items: Vec<usize>
     ptr_or_list: *mut Vec<usize>
 }
 
@@ -34,6 +33,19 @@ impl IndexList {
         unsafe {
             &*self.ptr_or_list
         }
+    }
+
+    fn is_immediate(&self) -> bool {
+        (self.ptr_or_list as usize) & 1 == 1
+    }
+
+    fn immediate_len(&self) -> usize {
+        debug_assert!(self.is_immediate())
+        ((self.ptr_or_list as usize) >> 1) & 0b111
+    }
+
+    fn set_immediate_value(&mut self, index: usize, value: usize) {
+        debug_assert!(self.is_immediate())
     }
 }
 
