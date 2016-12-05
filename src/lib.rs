@@ -80,7 +80,7 @@ impl IndexList {
 
     fn immediate_len(&self) -> usize {
         debug_assert!(self.is_immediate());
-        ((self.ptr_or_list as usize) >> 1) & 0b111
+        ((self.ptr_or_list as usize) >> 1) & ((1 << LENGTH_BITS)-1)
     }
 
     fn set_immediate_value(&mut self, index: usize, value: usize) {
