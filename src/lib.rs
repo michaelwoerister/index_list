@@ -56,7 +56,7 @@ impl IndexList {
         panic!();
     }
 
-    unsafe fn ptr_as_bits(&mut self) -> &mut size {
+    unsafe fn ptr_as_bits(&mut self) -> &mut usize {
         ::std::mem::transmute(&mut self.ptr_or_list)
     }
 }
