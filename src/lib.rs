@@ -14,6 +14,8 @@ impl IndexList {
     pub fn len(&self) -> usize {
         self.items.len()
     }
+
+    pub fn push()
 }
 
 
