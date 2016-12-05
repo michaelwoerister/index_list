@@ -58,7 +58,7 @@ mod tests {
 
     #[test]
     fn get() {
-        let mut list = IndexList::from_slice(&[1, 2, 1]);
+        let list = IndexList::from_slice(&[1, 2, 1]);
         assert_eq!(list.len(), 3);
         assert_eq!(list.get(0), Some(1));
         assert_eq!(list.get(1), Some(2));
