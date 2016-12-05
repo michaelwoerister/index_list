@@ -60,7 +60,7 @@ impl IndexList {
         }
     }
 
-    fn is_immediate(&self) -> bool {
+    pub fn is_immediate(&self) -> bool {
         (self.ptr_or_list as usize) & 1 == 1
     }
 
@@ -101,6 +101,14 @@ impl IndexList {
     }
 }
 
+impl Drop for IndexList {
+    fn drop(&mut self) {
+        if self.is_immediate() {
+
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::IndexList;
@@ -135,6 +143,7 @@ mod tests {
         for len in 0 .. 20 {
             let reference: Vec<usize> = (0..len).map(|val| val % 8).collect();
             let index_list = IndexList::from_slice(&reference);
+            assert_eq!(index_list.is_immediate(), len < 8);
 
             for (index, &val) in reference.iter().enumerate() {
                 assert_eq!(val, index_list.get(index).unwrap());
@@ -147,6 +156,7 @@ mod tests {
         for len in 0 .. 20 {
             let reference: Vec<usize> = (110..110+len).collect();
             let index_list = IndexList::from_slice(&reference);
+            assert!(!index_list.is_immediate());
 
             for (index, &val) in reference.iter().enumerate() {
                 assert_eq!(val, index_list.get(index).unwrap());
