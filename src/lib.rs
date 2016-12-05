@@ -48,12 +48,16 @@ impl IndexList {
         debug_assert!(self.is_immediate());
         debug_assert!(value == value & 0b1111);
         let bit_offset = (index + 1) * 4;
-        self.ptr_or_list &= !(0b1111usize << bit_offset) as *const Vec<usize>;
-        self.ptr_or_list |= value << bit_offset;
+        *self.ptr_as_bits() &= !(0b1111usize << bit_offset);
+        *self.ptr_as_bits() |= value << bit_offset;
     }
 
     fn get_immediate_value(&self, index: usize) -> usize {
         panic!();
+    }
+
+    unsafe fn ptr_as_bits(&mut self) -> &mut size {
+        ::std::mem::transmute(&mut self.ptr_or_list)
     }
 }
 
