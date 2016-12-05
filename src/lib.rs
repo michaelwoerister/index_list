@@ -15,7 +15,9 @@ impl IndexList {
         self.items.len()
     }
 
-    pub fn push()
+    pub fn push(&mut self, item: usize) {
+        self.items.push(item);
+    }
 }
 
 
