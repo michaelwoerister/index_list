@@ -84,7 +84,7 @@ impl IndexList {
     }
 
     fn can_be_immediate(values: &[usize]) -> bool {
-        values.len() < 8 && values.iter().all(|val| val & 0b1111 == val)
+        values.len() < 8 && values.iter().all(|&val| val & 0b1111 == val)
     }
 }
 
