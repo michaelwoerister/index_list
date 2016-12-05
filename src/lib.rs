@@ -131,9 +131,21 @@ mod tests {
     }
 
     #[test]
-    fn non_immediate_len() {
+    fn non_immediate_because_of_len() {
         for len in 0 .. 20 {
-            let reference: Vec<usize> = (0..len).map(|val| val % 8).take(len).collect();
+            let reference: Vec<usize> = (0..len).map(|val| val % 8).collect();
+            let index_list = IndexList::from_slice(&reference);
+
+            for (index, &val) in reference.iter().enumerate() {
+                assert_eq!(val, index_list.get(index).unwrap());
+            }
+        }
+    }
+
+    #[test]
+    fn non_immediate_because_of_val() {
+        for len in 0 .. 20 {
+            let reference: Vec<usize> = (110..110+len).collect();
             let index_list = IndexList::from_slice(&reference);
 
             for (index, &val) in reference.iter().enumerate() {
