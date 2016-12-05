@@ -29,7 +29,7 @@ impl IndexList {
     }
 
     fn get_vec(&self) -> &Vec<usize> {
-        assert!((self.ptr_or_list as usize) & 1 == 0);
+        debug_assert!(!self.is_immediate());
         unsafe {
             &*self.ptr_or_list
         }
@@ -40,12 +40,12 @@ impl IndexList {
     }
 
     fn immediate_len(&self) -> usize {
-        debug_assert!(self.is_immediate())
+        debug_assert!(self.is_immediate());
         ((self.ptr_or_list as usize) >> 1) & 0b111
     }
 
     fn set_immediate_value(&mut self, index: usize, value: usize) {
-        debug_assert!(self.is_immediate())
+        debug_assert!(self.is_immediate());
     }
 }
 
