@@ -10,12 +10,20 @@ impl IndexList {
             items: vec![]
         }
     }
+
+    pub fn len() -> usize {
+        self.items.len()
+    }
 }
 
 
 #[cfg(test)]
 mod tests {
+    use super::IndexList;
+
     #[test]
-    fn it_works() {
+    fn len() {
+        let list = IndexList::new();
+        assert_eq!(list.len(), 0);
     }
 }
