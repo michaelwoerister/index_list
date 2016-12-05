@@ -102,7 +102,7 @@ impl IndexList {
 impl Drop for IndexList {
     fn drop(&mut self) {
         if !self.is_immediate() {
-            Box::from_raw(self.ptr_or_list);
+            Box::from_raw(self.ptr_or_list as *mut _);
         }
     }
 }
