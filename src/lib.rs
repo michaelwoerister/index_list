@@ -35,13 +35,6 @@ impl IndexList {
             &*self.ptr_or_list
         }
     }
-
-    fn get_vec_mut(&mut self) -> &mut Vec<usize> {
-        assert!((self.ptr_or_list as usize) & 1 == 0);
-        unsafe {
-            &mut *self.ptr_or_list
-        }
-    }
 }
 
 #[cfg(test)]
