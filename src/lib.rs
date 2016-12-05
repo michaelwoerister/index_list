@@ -22,19 +22,33 @@ impl IndexList {
     }
 
     pub fn len(&self) -> usize {
-        self.items.len()
+        self.get_vec().len()
     }
 
     pub fn push(&mut self, item: usize) {
-        self.items.push(item);
+        self.get_vec_mut().push(item);
     }
 
     pub fn get(&self, index: usize) -> Option<usize> {
-        self.items.get(index).map(|x| *x)
+        self.get_vec().get(index).map(|x| *x)
     }
 
     pub fn set(&mut self, index: usize, value: usize) {
-        self.items[index] = value;
+        self.get_vec_mut()[index] = value;
+    }
+
+    fn get_vec(&self) -> &Vec<usize> {
+        assert!((self.ptr_or_list as usize) & 1 == 0);
+        unsafe {
+            &*self.ptr_or_list
+        }
+    }
+
+    fn get_vec_mut(&mut self) -> &mut Vec<usize> {
+        assert!((self.ptr_or_list as usize) & 1 == 0);
+        unsafe {
+            &mut *self.ptr_or_list
+        }
     }
 }
 
