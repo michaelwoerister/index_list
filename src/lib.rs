@@ -14,7 +14,7 @@ pub struct IndexList {
 impl IndexList {
     pub fn new() -> IndexList {
         let x = Box::new(Vec::new());
-        let ptr = &*x as *mut Vec<usize>
+        let ptr = &*x as *mut Vec<usize>;
         ::std::mem::forget(x);
         IndexList {
             ptr_or_list: ptr
