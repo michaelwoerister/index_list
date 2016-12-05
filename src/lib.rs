@@ -58,7 +58,7 @@ mod tests {
         assert_eq!(list.get(3), None);
     }
 
-     #[test]
+    #[test]
     fn set() {
         let mut list = IndexList::new();
         list.push(1);
@@ -72,5 +72,24 @@ mod tests {
         list.set(1, 4);
         assert_eq!(list.get(0), Some(3));
         assert_eq!(list.get(1), Some(4));
+    }
+
+    #[test]
+    fn index() {
+        let mut list = IndexList::new();
+        list.push(1);
+        list.push(2);
+        assert_eq!(list.len(), 2);
+        assert_eq!(list[0], 1);
+        assert_eq!(list[1], 2);
+    }
+
+    #[test]
+    #[should_panic]
+    fn index() {
+        let mut list = IndexList::new();
+        list.push(1);
+        list.push(2);
+        let _ = list[2];
     }
 }
