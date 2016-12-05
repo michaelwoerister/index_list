@@ -22,6 +22,10 @@ impl IndexList {
     pub fn get(&self, index: usize) -> Option<usize> {
         self.items.get(index).map(|x| *x)
     }
+
+    pub fn set(&mut self, index: usize, value: usize) {
+        self.items.set(index, value)
+    }
 }
 
 
@@ -46,5 +50,21 @@ mod tests {
         assert_eq!(list.get(1), Some(2));
         assert_eq!(list.get(2), Some(1));
         assert_eq!(list.get(3), None);
+    }
+
+     #[test]
+    fn set() {
+        let mut list = IndexList::new();
+        list.push(1);
+        list.push(2);
+        assert_eq!(list.len(), 2);
+        assert_eq!(list.get(0), Some(1));
+        assert_eq!(list.get(1), Some(2));
+        list.set(0, 3);
+        assert_eq!(list.get(0), Some(3));
+        assert_eq!(list.get(1), Some(2));
+        list.set(1, 4);
+        assert_eq!(list.get(0), Some(3));
+        assert_eq!(list.get(1), Some(4));
     }
 }
