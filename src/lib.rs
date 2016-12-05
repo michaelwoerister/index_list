@@ -18,6 +18,10 @@ impl IndexList {
     pub fn push(&mut self, item: usize) {
         self.items.push(item);
     }
+
+    pub fn get(&self, index: usize) -> Option<usize> {
+        self.items.get(index)
+    }
 }
 
 
