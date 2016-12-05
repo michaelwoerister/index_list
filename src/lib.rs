@@ -23,9 +23,7 @@ impl IndexList {
 
             index_list
         } else {
-            let x = Box::new(values.to_owned());
-            let ptr = &*x as *const Vec<usize>;
-            ::std::mem::forget(x);
+            let ptr = Box::new(values.to_owned()).into_raw();
             IndexList {
                 ptr_or_list: ptr
             }
@@ -103,8 +101,8 @@ impl IndexList {
 
 impl Drop for IndexList {
     fn drop(&mut self) {
-        if self.is_immediate() {
-
+        if !self.is_immediate() {
+            // let  self.ptr_or_list
         }
     }
 }
