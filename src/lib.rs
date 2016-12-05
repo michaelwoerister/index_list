@@ -28,6 +28,12 @@ impl IndexList {
     }
 }
 
+impl std::ops::Index<usize> for IndexList {
+    type Output: usize;
+    fn index(&self, index: usize) -> &Self::Output {
+        self.items.get(index).unwrap()
+    }
+}
 
 #[cfg(test)]
 mod tests {
