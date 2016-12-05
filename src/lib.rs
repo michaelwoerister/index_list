@@ -153,7 +153,7 @@ mod tests {
 
     #[test]
     fn non_immediate_because_of_val() {
-        for len in 0 .. 20 {
+        for len in 1 .. 20 {
             let reference: Vec<usize> = (110..110+len).collect();
             let index_list = IndexList::from_slice(&reference);
             assert!(!index_list.is_immediate());
