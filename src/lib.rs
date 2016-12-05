@@ -58,7 +58,9 @@ impl IndexList {
 
     fn ptr_as_bits(&mut self) -> &mut usize {
         debug_assert!(self.is_immediate());
-        ::std::mem::transmute(&mut self.ptr_or_list)
+        unsafe {
+            ::std::mem::transmute(&mut self.ptr_or_list)
+        }
     }
 }
 
