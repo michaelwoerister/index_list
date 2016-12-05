@@ -31,7 +31,11 @@ impl IndexList {
 
     pub fn get(&self, index: usize) -> Option<usize> {
         if self.is_immediate() {
-            self.immed(index)
+            if index > self.immediate_len() {
+                None
+            } else {
+                self.get_immediate_value(index)
+            }
         } else {
             self.get_vec().get(index).map(|x| *x)
         }
