@@ -12,11 +12,23 @@ pub struct IndexList {
 
 impl IndexList {
     pub fn from_slice(values: &[usize]) -> IndexList {
-        let x = Box::new(values.to_owned());
-        let ptr = &*x as *const Vec<usize>;
-        ::std::mem::forget(x);
-        IndexList {
-            ptr_or_list: ptr
+        if IndexList::can_be_immediate(values) {
+            let mut index_list = IndexList {
+                ptr_or_list: (0b1 | (values.len() << 1)) as *const Vec<usize>
+            };
+
+            for (index, &value) in values.iter().enumerate() {
+                index_list.set_immediate_value(index, value)
+            }
+
+            index_list
+        } else {
+            let x = Box::new(values.to_owned());
+            let ptr = &*x as *const Vec<usize>;
+            ::std::mem::forget(x);
+            IndexList {
+                ptr_or_list: ptr
+            }
         }
     }
 
@@ -60,6 +72,7 @@ impl IndexList {
     fn set_immediate_value(&mut self, index: usize, value: usize) {
         debug_assert!(self.is_immediate());
         debug_assert!(value == value & 0b1111);
+        debug_assert!(index < self.immediate_len());
         let bit_offset = (index + 1) * 4;
         *self.ptr_as_bits_mut() &= !(0b1111 << bit_offset);
         *self.ptr_as_bits_mut() |= value << bit_offset;
