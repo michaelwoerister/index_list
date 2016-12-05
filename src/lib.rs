@@ -75,6 +75,15 @@ mod tests {
     }
 
     #[test]
+    #[should_panic]
+    fn set_panic() {
+        let mut list = IndexList::new();
+        list.push(1);
+        list.push(2);
+        list.set(2, 3);
+    }
+
+    #[test]
     fn index() {
         let mut list = IndexList::new();
         list.push(1);
