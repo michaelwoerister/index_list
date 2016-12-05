@@ -7,13 +7,13 @@
 // ILLL 0000 1111 2222 3333 4444 5555 6666
 
 pub struct IndexList {
-    ptr_or_list: *mut Vec<usize>
+    ptr_or_list: *const Vec<usize>
 }
 
 impl IndexList {
     pub fn from_slice(values: &[usize]) -> IndexList {
-        let mut x = Box::new(values.to_owned());
-        let ptr = &mut *x as *mut Vec<usize>;
+        let x = Box::new(values.to_owned());
+        let ptr = &*x as *const Vec<usize>;
         ::std::mem::forget(x);
         IndexList {
             ptr_or_list: ptr
@@ -48,7 +48,7 @@ impl IndexList {
         debug_assert!(self.is_immediate());
         debug_assert!(value == value & 0b1111);
         let bit_offset = (index + 1) * 4;
-        self.ptr_or_list &= !(0b1111 << bit_offset);
+        self.ptr_or_list &= !(0b1111usize << bit_offset) as *const Vec<usize>;
         self.ptr_or_list |= value << bit_offset;
     }
 
