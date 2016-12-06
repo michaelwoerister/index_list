@@ -1,0 +1,31 @@
+language: rust
+os:
+  - linux
+  - osx
+rust:
+  - nightly
+sudo: false
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+       export OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include;
+       export OPENSSL_LIB_DIR=`brew --prefix openssl`/lib;
+    else
+       export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt;
+    fi
+script:
+  - git fetch --unshallow
+  - cargo install cargo-incremental
+  - $HOME/.cargo/bin/cargo-incremental replay --work-dir=/tmp/cagro-incr-work --cli-log --no-debuginfo a15ca05..master
+  - $HOME/.cargo/bin/cargo-incremental replay --work-dir=/tmp/cagro-incr-work --cli-log a15ca05..master
+notifications:
+  email:
+    on_success: never
+addons:
+  apt:
+    sources:
+      - kalakris-cmake
+    packages:
+      - cmake
+      - g++-multilib
+      - lib32stdc++6
+
