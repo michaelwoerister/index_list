@@ -1,0 +1,15 @@
+
+install:
+  - ps: Start-FileDownload 'https://static.rust-lang.org/dist/rust-nightly-x86_64-pc-windows-msvc.exe'
+  - rust-nightly-x86_64-pc-windows-msvc.exe /VERYSILENT /NORESTART /DIR="C:\Program Files\Rust"
+  - SET PATH=%PATH%;C:\Program Files\Rust\bin
+  - rustc -V
+  - cargo -V
+  - cargo install cargo-incremental
+  - rm rust-nightly-x86_64-pc-windows-msvc.exe
+
+build: false
+
+test_script:
+  - cmd: C:\Users\appveyor\.cargo\bin\cargo-incremental replay --work-dir="%TEMP%\cargo-incr-workdir" --no-debuginfo --cli-log a15ca052014..cargo-incremental-build
+  - cmd: C:\Users\appveyor\.cargo\bin\cargo-incremental replay --work-dir="%TEMP%\cargo-incr-workdir" --cli-log a15ca052014..cargo-incremental-build
